@@ -1,0 +1,128 @@
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { getLocationById } from '../services/locationService';
+import type { LocationDto } from '../types/location';
+import { useTheme } from '../context/ThemeContext';
+
+const getImageUrl = (url?: string) => {
+  if (!url || url === 'string' || url.trim() === '') {
+    return 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1000&q=80';
+  }
+
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+
+  const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5086/api').replace('/api', '');
+  return `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
+};
+
+export const LocationDetailsPage = () => {
+  const { id } = useParams<{ id: string }>();
+  const [location, setLocation] = useState<LocationDto | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const { isDarkMode } = useTheme();
+
+  useEffect(() => {
+    if (id) {
+      getLocationById(Number(id))
+        .then((data) => setLocation(data))
+        .catch((err) => {
+          console.error(err);
+          setError('Greška pri učitavanju detalja o lokaciji.');
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div style={{
+        minHeight: 'calc(100vh - 70px)',
+        backgroundColor: isDarkMode ? '#0f172a' : '#f8fafc',
+        color: isDarkMode ? '#f8fafc' : '#0f172a',
+        paddingTop: '3rem',
+        textAlign: 'center'
+      }}>
+        Učitavanje detalja...
+      </div>
+    );
+  }
+
+  if (error || !location) {
+    return (
+      <div style={{
+        minHeight: 'calc(100vh - 70px)',
+        backgroundColor: isDarkMode ? '#0f172a' : '#f8fafc',
+        color: '#ef4444',
+        paddingTop: '3rem',
+        textAlign: 'center'
+      }}>
+        {error || 'Lokacija nije pronađena.'}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{
+      width: '100%',
+      minHeight: 'calc(100vh - 70px)',
+      backgroundColor: isDarkMode ? '#0f172a' : '#f8fafc',
+      color: isDarkMode ? '#f8fafc' : '#0f172a',
+      padding: '2.5rem 3rem',
+      boxSizing: 'border-box'
+    }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <Link
+          to="/"
+          style={{
+            color: isDarkMode ? '#38bdf8' : '#2563eb',
+            textDecoration: 'none',
+            fontWeight: 'bold',
+            display: 'inline-block',
+            marginBottom: '1.5rem'
+          }}
+        >
+          ← Nazad na sve lokacije
+        </Link>
+
+        <div style={{
+          backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+          border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          boxShadow: isDarkMode ? '0 4px 12px rgba(0,0,0,0.4)' : '0 4px 6px -1px rgba(0,0,0,0.1)'
+        }}>
+          <img
+            src={getImageUrl(location.imageUrl)}
+            alt={location.name}
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1000&q=80';
+            }}
+            style={{ width: '100%', maxHeight: '420px', objectFit: 'cover' }}
+          />
+          <div style={{ padding: '2rem' }}>
+            <h1 style={{
+              fontSize: '2.25rem',
+              marginBottom: '1rem',
+              color: isDarkMode ? '#f8fafc' : '#0f172a'
+            }}>
+              {location.name}
+            </h1>
+            <p style={{
+              color: isDarkMode ? '#cbd5e1' : '#334155',
+              fontSize: '1.1rem',
+              lineHeight: '1.7',
+              whiteSpace: 'pre-line'
+            }}>
+              {location.description && location.description !== 'string' && location.description.trim() !== ''
+                ? location.description
+                : 'Za ovu lokaciju trenutno nije unesen detaljan opis.'}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
