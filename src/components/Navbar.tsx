@@ -15,27 +15,38 @@ export const Navbar = () => {
 
   return (
     <nav style={{
-      position: 'relative',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '0.8rem 3rem',
+      flexWrap: 'wrap',
+      gap: '1rem',
+      padding: '0.8rem 2rem',
       backgroundColor: isDarkMode ? '#0f172a' : '#1e293b',
       borderBottom: isDarkMode ? '1px solid #334155' : 'none',
       color: '#fff',
       width: '100%',
       boxSizing: 'border-box'
     }}>
-      <Link to="/" style={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#38bdf8', textDecoration: 'none' }}>
-        VisitVisoko
-      </Link>
+      <div style={{ flex: '1 1 0px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', minWidth: '160px' }}>
+        <Link to="/" style={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#38bdf8', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+          VisitVisoko
+        </Link>
+      </div>
 
-      <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+      <div style={{ flex: '0 0 auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <WeatherWidget />
       </div>
 
-      <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-        <Link to="/" style={{ color: '#f8fafc', textDecoration: 'none', fontWeight: '500' }}>
+      <div style={{
+        flex: '1 1 0px',
+        display: 'flex',
+        gap: '1rem',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexWrap: 'wrap',
+        minWidth: '280px'
+      }}>
+        <Link to="/" style={{ color: '#f8fafc', textDecoration: 'none', fontWeight: '500', whiteSpace: 'nowrap' }}>
           Početna
         </Link>
 
@@ -48,7 +59,8 @@ export const Navbar = () => {
             padding: '0.4rem 0.8rem',
             color: '#f8fafc',
             cursor: 'pointer',
-            fontSize: '0.85rem'
+            fontSize: '0.85rem',
+            whiteSpace: 'nowrap'
           }}
         >
           {isDarkMode ? '☀️ Svijetli režim' : '🌙 Tamni režim'}
@@ -56,7 +68,7 @@ export const Navbar = () => {
 
         {token ? (
           <>
-            <Link to="/admin" style={{ color: '#38bdf8', textDecoration: 'none', fontWeight: '600', fontSize: '0.9rem' }}>
+            <Link to="/admin" style={{ color: '#38bdf8', textDecoration: 'none', fontWeight: '600', fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
               Admin Panel
             </Link>
             <button
@@ -69,7 +81,8 @@ export const Navbar = () => {
                 borderRadius: '6px',
                 fontWeight: '600',
                 cursor: 'pointer',
-                fontSize: '0.85rem'
+                fontSize: '0.85rem',
+                whiteSpace: 'nowrap'
               }}
             >
               Odjavi se 
@@ -83,7 +96,8 @@ export const Navbar = () => {
             borderRadius: '6px',
             textDecoration: 'none',
             fontWeight: '500',
-            fontSize: '0.9rem'
+            fontSize: '0.9rem',
+            whiteSpace: 'nowrap'
           }}>
             Admin Login
           </Link>
