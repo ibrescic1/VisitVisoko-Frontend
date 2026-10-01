@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
 import { LocationDetailsPage } from './pages/LocationDetailsPage';
 import { LoginPage } from './pages/LoginPage';
+import { AdminPage } from './pages/AdminPage';
 import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/locations/:id" element={<LocationDetailsPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </div>
       </BrowserRouter>

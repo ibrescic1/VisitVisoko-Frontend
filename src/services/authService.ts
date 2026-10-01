@@ -1,7 +1,7 @@
 import api from '../api/axiosInstance';
 export interface LoginRequest {
   username: string;
-  passwordHash: string; 
+  password: string; 
 }
 
 export interface LoginResponse {

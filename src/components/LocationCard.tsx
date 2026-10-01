@@ -4,6 +4,8 @@ import { useTheme } from '../context/ThemeContext';
 
 interface LocationCardProps {
   location: LocationDto;
+  isFavorite: boolean;
+  onToggleFavorite: (id: number) => void;
 }
 
 const getImageUrl = (url?: string) => {
@@ -19,56 +21,118 @@ const getImageUrl = (url?: string) => {
   return `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
 };
 
-export const LocationCard = ({ location }: LocationCardProps) => {
+export const LocationCard = ({ location, isFavorite, onToggleFavorite }: LocationCardProps) => {
   const { isDarkMode } = useTheme();
+
+  const rawTitle = location.name || (location as any).name;
+  const hasValidTitle = rawTitle && rawTitle !== 'string' && rawTitle.trim() !== '';
+  const hasValidDesc = location.description && location.description !== 'string' && location.description.trim() !== '';
+
+  const displayTitle = hasValidTitle
+    ? rawTitle
+    : hasValidDesc
+    ? location.description
+    : 'Lokacija Visoko';
+
+  const displayDescription = hasValidTitle && hasValidDesc
+    ? location.description
+    : 'Otkrijte više detalja i lokaciju na mapi za ovu turističku atrakciju.';
 
   return (
     <div style={{
-      border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+      backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
       borderRadius: '12px',
       overflow: 'hidden',
-      boxShadow: isDarkMode ? '0 4px 12px rgba(0, 0, 0, 0.4)' : '0 4px 6px -1px rgba(0, 0, 0, 0.08)',
-      backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+      border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+      boxShadow: isDarkMode ? '0 4px 12px rgba(0,0,0,0.3)' : '0 4px 6px -1px rgba(0,0,0,0.1)',
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      position: 'relative'
     }}>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          onToggleFavorite(location.id);
+        }}
+        title={isFavorite ? "Ukloni iz omiljenih" : "Dodaj u omiljene"}
+        style={{
+          position: 'absolute',
+          top: '12px',
+          right: '12px',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          border: 'none',
+          borderRadius: '50%',
+          width: '38px',
+          height: '38px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          fontSize: '1.2rem',
+          backdropFilter: 'blur(4px)',
+          zIndex: 2
+        }}
+      >
+        {isFavorite ? '❤️' : '🤍'}
+      </button>
+
       <img
         src={getImageUrl(location.imageUrl)}
-        alt={location.name}
+        alt={displayTitle}
         onError={(e) => {
           (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=600&q=80';
         }}
-        style={{ width: '100%', height: '220px', objectFit: 'cover' }}
+        style={{ width: '100%', height: '200px', objectFit: 'cover' }}
       />
+
       <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.25rem', color: isDarkMode ? '#f8fafc' : '#1a202c' }}>
-          {location.name}
-        </h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem', gap: '0.5rem' }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 'bold', margin: 0, color: isDarkMode ? '#f8fafc' : '#0f172a' }}>
+            {displayTitle}
+          </h3>
+          {location.categoryName && (
+            <span style={{
+              fontSize: '0.75rem',
+              fontWeight: '600',
+              padding: '0.2rem 0.55rem',
+              borderRadius: '12px',
+              backgroundColor: isDarkMode ? '#334155' : '#e2e8f0',
+              color: isDarkMode ? '#38bdf8' : '#2563eb',
+              whiteSpace: 'nowrap'
+            }}>
+              {location.categoryName}
+            </span>
+          )}
+        </div>
+
         <p style={{
-          color: isDarkMode ? '#94a3b8' : '#4a5568',
-          fontSize: '0.95rem',
+          fontSize: '0.9rem',
+          color: isDarkMode ? '#cbd5e1' : '#64748b',
           lineHeight: '1.5',
+          marginBottom: '1.25rem',
           flexGrow: 1,
-          marginBottom: '1rem'
+          display: '-webkit-box',
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden'
         }}>
-          {location.description && location.description !== 'string' && location.description.trim() !== ''
-            ? (location.description.length > 100 ? `${location.description.substring(0, 100)}...` : location.description)
-            : 'Za ovu lokaciju trenutno nije unesen detaljan opis.'}
+          {displayDescription}
         </p>
+
         <Link
           to={`/locations/${location.id}`}
           style={{
-            display: 'inline-block',
             textAlign: 'center',
             backgroundColor: '#2563eb',
-            color: '#fff',
-            padding: '0.65rem 1rem',
+            color: '#ffffff',
+            padding: '0.6rem 1rem',
             borderRadius: '6px',
             textDecoration: 'none',
-            fontWeight: '600'
+            fontWeight: '600',
+            fontSize: '0.9rem'
           }}
         >
-          Detaljnije
+          Saznaj više →
         </Link>
       </div>
     </div>

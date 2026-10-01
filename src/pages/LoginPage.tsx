@@ -17,9 +17,9 @@ export const LoginPage = () => {
     setLoading(true);
 
     try {
-      await login({ username, passwordHash: password });
-      alert('Uspješna prijava!');
-      navigate('/');
+      await login({ username, password });
+      //alert('Uspješna prijava!');
+      navigate('/admin'); 
     } catch (err) {
       console.error(err);
       setError('Neispravno korisničko ime ili lozinka.');
