@@ -81,7 +81,7 @@ export const ReviewForm = ({ locationId }: { locationId: number }) => {
         </div>
 
         <textarea
-          placeholder="Napišite vaše utiske o ovoj lokaciji..."
+          placeholder="Napišite vaše mišljenje o ovoj lokaciji..."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={3}

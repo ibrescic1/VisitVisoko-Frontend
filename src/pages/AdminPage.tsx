@@ -1,10 +1,39 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getLocations } from '../services/locationService';
 import type { LocationDto } from '../types/location';
 import { useTheme } from '../context/ThemeContext';
 
+interface CategoryDto {
+  id: number;
+  name: string;
+}
+
+const getImageUrl = (url?: string) => {
+  if (!url || url === 'string' || url.trim() === '') {
+    return 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=600&q=80';
+  }
+
+  let cleanUrl = url.replace(/\\/g, '/');
+
+  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(cleanUrl) && !cleanUrl.startsWith('http')) {
+    cleanUrl += '.jpg';
+  }
+
+  if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://')) {
+    return cleanUrl;
+  }
+
+  if (!cleanUrl.startsWith('/')) {
+    cleanUrl = `/${cleanUrl}`;
+  }
+
+  return `http://localhost:5086${cleanUrl}`;
+};
+
 export const AdminPage = () => {
   const [locations, setLocations] = useState<LocationDto[]>([]);
+  const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
 
   const [title, setTitle] = useState('');
@@ -13,12 +42,25 @@ export const AdminPage = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [latitude, setLatitude] = useState(43.9878);
   const [longitude, setLongitude] = useState(18.1783);
-  const [categoryId, setCategoryId] = useState(1);
+  const [categoryId, setCategoryId] = useState<number>(1);
 
   const { isDarkMode } = useTheme();
 
-  const loadData = () => {
+  const loadData = async () => {
     getLocations().then(setLocations).catch(console.error);
+
+    try {
+      const res = await fetch('http://localhost:5086/api/categories');
+      if (res.ok) {
+        const data = await res.json();
+        setCategories(data);
+        if (data.length > 0 && !editingId) {
+          setCategoryId(data[0].id);
+        }
+      }
+    } catch (err) {
+      console.error('Greška pri dohvaćanju kategorija:', err);
+    }
   };
 
   useEffect(() => {
@@ -33,7 +75,7 @@ export const AdminPage = () => {
     setImageUrl(loc.imageUrl || '');
     setLatitude(loc.latitude || 43.9878);
     setLongitude(loc.longitude || 18.1783);
-    setCategoryId(loc.categoryId || 1);
+    setCategoryId(loc.categoryId || (categories[0]?.id ?? 1));
   };
 
   const resetForm = () => {
@@ -44,12 +86,12 @@ export const AdminPage = () => {
     setImageUrl('');
     setLatitude(43.9878);
     setLongitude(18.1783);
-    setCategoryId(1);
+    setCategoryId(categories[0]?.id ?? 1);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('token');
 
     const payload = {
       id: editingId || 0,
@@ -81,7 +123,7 @@ export const AdminPage = () => {
       if (res.ok) {
         alert(editingId ? 'Lokacija uspješno izmijenjena!' : 'Nova lokacija dodana!');
         resetForm();
-        loadData(); 
+        loadData();
       } else {
         alert('Greška pri spremanju lokacije.');
       }
@@ -149,9 +191,37 @@ export const AdminPage = () => {
           style={{ padding: '0.6rem', borderRadius: '6px' }}
         />
 
+        <div style={{ gridColumn: '1 / -1' }}>
+          <label style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.9rem', fontWeight: '600' }}>
+            Kategorija lokacije:
+          </label>
+          <select
+            value={categoryId}
+            onChange={(e) => setCategoryId(Number(e.target.value))}
+            style={{
+              width: '100%',
+              padding: '0.69rem',
+              borderRadius: '6px',
+              border: isDarkMode ? '1px solid #475569' : '1px solid #ccc',
+              backgroundColor: isDarkMode ? '#0f172a' : '#ffffff',
+              color: isDarkMode ? '#f8fafc' : '#0f172a'
+            }}
+          >
+            {categories.length > 0 ? (
+              categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))
+            ) : (
+              <option value={1}>Učitavanje kategorija...</option>
+            )}
+          </select>
+        </div>
+
         <input
           type="text"
-          placeholder="URL Slike (https://... ili /uploads/...)"
+          placeholder="URL Slike (https://... ili /uploads/images/...)"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
           style={{ padding: '0.6rem', borderRadius: '6px', gridColumn: '1 / -1' }}
@@ -202,6 +272,7 @@ export const AdminPage = () => {
             <th style={{ padding: '0.75rem' }}>ID</th>
             <th style={{ padding: '0.75rem' }}>Slika</th>
             <th style={{ padding: '0.75rem' }}>Naslov</th>
+            <th style={{ padding: '0.75rem' }}>Kategorija</th>
             <th style={{ padding: '0.75rem' }}>Adresa</th>
             <th style={{ padding: '0.75rem' }}>Akcije</th>
           </tr>
@@ -211,15 +282,24 @@ export const AdminPage = () => {
             <tr key={loc.id} style={{ borderBottom: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0' }}>
               <td style={{ padding: '0.75rem' }}>{loc.id}</td>
               <td style={{ padding: '0.75rem' }}>
-                {loc.imageUrl ? (
-                  <img 
-                    src={loc.imageUrl.startsWith('http') ? loc.imageUrl : `http://localhost:5086${loc.imageUrl}`} 
-                    alt={loc.title} 
-                    style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '6px' }}
-                  />
-                ) : '-'}
+                <img
+                  src={getImageUrl(loc.imageUrl)}
+                  alt={loc.title || loc.name || 'Lokacija'}
+                  style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '6px' }}
+                />
               </td>
-              <td style={{ padding: '0.75rem', fontWeight: '600' }}>{loc.title || loc.name || 'Bez naslova'}</td>
+              <td style={{ padding: '0.75rem', fontWeight: '600' }}>
+                <Link
+                  to={`/locations/${loc.id}`}
+                  style={{ color: isDarkMode ? '#38bdf8' : '#2563eb', textDecoration: 'none' }}
+                  title="Otvori detalje lokacije"
+                >
+                  {loc.title || loc.name || 'Bez naslova'} 
+                </Link>
+              </td>
+              <td style={{ padding: '0.75rem' }}>
+                {loc.categoryName || categories.find(c => c.id === loc.categoryId)?.name || '-'}
+              </td>
               <td style={{ padding: '0.75rem' }}>{loc.address || '-'}</td>
               <td style={{ padding: '0.75rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <button onClick={() => handleEdit(loc)} style={{ padding: '0.4rem 0.8rem', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Uredi</button>

@@ -197,7 +197,7 @@ export const LocationDetailsPage = () => {
   border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0'
 }}>
   <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '1.5rem', color: isDarkMode ? '#f8fafc' : '#0f172a' }}>
-    Recenzije i Utisci
+    Recenzije i mišljenja posjetitelja
   </h2>
 
   <ReviewForm locationId={location.id} />
