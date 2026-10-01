@@ -86,7 +86,7 @@ export const HomePage = () => {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '4rem',
+    gap: '13rem',
     maxWidth: '1000px',
     margin: '0 auto',
     color: '#ffffff',
