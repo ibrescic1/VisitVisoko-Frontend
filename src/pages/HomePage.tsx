@@ -43,7 +43,7 @@ export const HomePage = () => {
 
   const filteredLocations = locations.filter((loc) => {
     const query = searchQuery.toLowerCase().trim();
-    const titleText = (loc.name || (loc as any).name || '').toLowerCase();
+    const titleText = (loc.title || (loc as any).title || '').toLowerCase();
     const descText = (loc.description || '').toLowerCase();
 
     const matchesSearch = query === '' || titleText.includes(query) || descText.includes(query);

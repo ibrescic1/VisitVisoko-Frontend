@@ -25,9 +25,9 @@ export const AdminPage = () => {
     loadData();
   }, []);
 
-  const handleEdit = (loc: LocationDto) => {
+  const handleEdit = (loc: any) => {
     setEditingId(loc.id);
-    setTitle(loc.name || (loc as any).name || '');
+    setTitle(loc.title || loc.name || '');
     setDescription(loc.description || '');
     setAddress(loc.address || '');
     setImageUrl(loc.imageUrl || '');
@@ -44,6 +44,7 @@ export const AdminPage = () => {
     setImageUrl('');
     setLatitude(43.9878);
     setLongitude(18.1783);
+    setCategoryId(1);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,14 +79,15 @@ export const AdminPage = () => {
       });
 
       if (res.ok) {
-        alert(editingId ? 'Lokacija izmijenjena!' : 'Nova lokacija dodana!');
+        alert(editingId ? 'Lokacija uspješno izmijenjena!' : 'Nova lokacija dodana!');
         resetForm();
-        loadData();
+        loadData(); 
       } else {
         alert('Greška pri spremanju lokacije.');
       }
     } catch (err) {
       console.error(err);
+      alert('Mrežna greška pri spajanju na API.');
     }
   };
 
@@ -127,7 +129,7 @@ export const AdminPage = () => {
         gridTemplateColumns: '1fr 1fr'
       }}>
         <h2 style={{ gridColumn: '1 / -1', margin: 0 }}>
-          {editingId ? 'Uredi lokaciju' : 'Dodaj novu lokaciju'}
+          {editingId ? `Uredi lokaciju (ID: ${editingId})` : 'Dodaj novu lokaciju'}
         </h2>
 
         <input
@@ -149,7 +151,7 @@ export const AdminPage = () => {
 
         <input
           type="text"
-          placeholder="URL Slike (https://...)"
+          placeholder="URL Slike (https://... ili /uploads/...)"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
           style={{ padding: '0.6rem', borderRadius: '6px', gridColumn: '1 / -1' }}
@@ -198,20 +200,30 @@ export const AdminPage = () => {
         <thead>
           <tr style={{ backgroundColor: isDarkMode ? '#1e293b' : '#e2e8f0', textAlign: 'left' }}>
             <th style={{ padding: '0.75rem' }}>ID</th>
+            <th style={{ padding: '0.75rem' }}>Slika</th>
             <th style={{ padding: '0.75rem' }}>Naslov</th>
             <th style={{ padding: '0.75rem' }}>Adresa</th>
             <th style={{ padding: '0.75rem' }}>Akcije</th>
           </tr>
         </thead>
         <tbody>
-          {locations.map((loc) => (
+          {locations.map((loc: any) => (
             <tr key={loc.id} style={{ borderBottom: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0' }}>
               <td style={{ padding: '0.75rem' }}>{loc.id}</td>
-              <td style={{ padding: '0.75rem' }}>{loc.name || (loc as any).name}</td>
+              <td style={{ padding: '0.75rem' }}>
+                {loc.imageUrl ? (
+                  <img 
+                    src={loc.imageUrl.startsWith('http') ? loc.imageUrl : `http://localhost:5086${loc.imageUrl}`} 
+                    alt={loc.title} 
+                    style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '6px' }}
+                  />
+                ) : '-'}
+              </td>
+              <td style={{ padding: '0.75rem', fontWeight: '600' }}>{loc.title || loc.name || 'Bez naslova'}</td>
               <td style={{ padding: '0.75rem' }}>{loc.address || '-'}</td>
-              <td style={{ padding: '0.75rem', display: 'flex', gap: '0.5rem' }}>
-                <button onClick={() => handleEdit(loc)} style={{ padding: '0.4rem 0.8rem', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>E</button>
-                <button onClick={() => handleDelete(loc.id)} style={{ padding: '0.4rem 0.8rem', backgroundColor: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>X</button>
+              <td style={{ padding: '0.75rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <button onClick={() => handleEdit(loc)} style={{ padding: '0.4rem 0.8rem', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Uredi</button>
+                <button onClick={() => handleDelete(loc.id)} style={{ padding: '0.4rem 0.8rem', backgroundColor: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Obriši</button>
               </td>
             </tr>
           ))}

@@ -5,6 +5,7 @@ import { LocationDetailsPage } from './pages/LocationDetailsPage';
 import { LoginPage } from './pages/LoginPage';
 import { AdminPage } from './pages/AdminPage';
 import { ThemeProvider } from './context/ThemeContext';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/locations/:id" element={<LocationDetailsPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<AdminPage />} />
+          </Route>
           </Routes>
         </div>
       </BrowserRouter>

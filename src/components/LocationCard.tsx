@@ -24,7 +24,7 @@ const getImageUrl = (url?: string) => {
 export const LocationCard = ({ location, isFavorite, onToggleFavorite }: LocationCardProps) => {
   const { isDarkMode } = useTheme();
 
-  const rawTitle = location.name || (location as any).name;
+  const rawTitle = location.title || (location as any).title;
   const hasValidTitle = rawTitle && rawTitle !== 'string' && rawTitle.trim() !== '';
   const hasValidDesc = location.description && location.description !== 'string' && location.description.trim() !== '';
 

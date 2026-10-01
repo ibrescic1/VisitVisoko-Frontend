@@ -65,7 +65,7 @@ export const LocationDetailsPage = () => {
     );
   }
 
-  const locationTitle = location.name || (location as any).name || 'Detalji lokacije';
+  const locationTitle = location.title || (location as any).title || 'Detalji lokacije';
 
   return (
     <div style={{

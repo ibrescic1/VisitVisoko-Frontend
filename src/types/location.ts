@@ -1,6 +1,6 @@
 export interface LocationDto {
   id: number;
-  name: string;
+  title: string;
   description: string;
   address: string;
   latitude: number;
