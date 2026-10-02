@@ -3,6 +3,7 @@ import { getLocations } from '../services/locationService';
 import type { LocationDto } from '../types/location';
 import { LocationCard } from '../components/LocationCard';
 import { useTheme } from '../context/ThemeContext';
+import { CityFacts } from '../components/CityFacts';
 
 export const HomePage = () => {
   const [locations, setLocations] = useState<LocationDto[]>([]);
@@ -66,127 +67,126 @@ export const HomePage = () => {
       boxSizing: 'border-box'
     }}>
 
-<div style={{
-  background: isDarkMode 
-    ? 'linear-gradient(180deg, #132e38 0%, #0f172a 100%)' 
-    : 'linear-gradient(180deg, #6c9eb5 0%, #5b8fa7 65%, transparent 100%)',
-  width: '100vw',
-  position: 'relative',
-  left: '50%',
-  right: '50%',
-  marginLeft: '-50vw',
-  marginRight: '-50vw',
-  marginTop: '-2.5rem',
-  padding: '4rem 2rem 4rem 2rem',
-  borderRadius: '0 0 28px 28px',
-  marginBottom: '2.5rem'
-}}>
-  <header style={{
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '13rem',
-    maxWidth: '1000px',
-    margin: '0 auto',
-    color: '#ffffff',
-    position: 'relative',
-    flexWrap: 'wrap'
-  }}>
-    <div style={{ flex: '1 1 420px', maxWidth: '520px', textAlign: 'left', zIndex: 2 }}>
-      <h1 style={{ 
-        fontSize: '2.8rem', 
-        fontWeight: '800', 
-        marginBottom: '0.75rem', 
-        lineHeight: 1.15,
-        letterSpacing: '-0.02em',
-        color: '#ffffff',
-        textShadow: '0 2px 10px rgba(0,0,0,0.15)'
-      }}>
-        Istražite <span style={{ color: '#fef08a' }}>Visoko</span>
-      </h1>
-
-      <p style={{ 
-        fontSize: '1.1rem', 
-        lineHeight: 1.6,
-        color: '#f8fafc',
-        marginBottom: '1.75rem',
-        textShadow: '0 1px 4px rgba(0,0,0,0.15)'
-      }}>
-        Otkrijte kulturna, historijska i prirodna bogatstva grada Visoko, od tajanstvenih piramida do kraljevske historije.
-      </p>
-
-      <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        
-        <button 
-          onClick={() => {
-            const el = document.getElementById('locations');
-            if (el) {
-              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          }}
-          style={{
-            backgroundColor: isDarkMode ? '#72cffa' : '#ffffff', 
-            color: '#0f172a',
-            border: isDarkMode ? '1px solid #7dd3fc' : 'none',
-            padding: '0.75rem 1.5rem',
-            borderRadius: '12px',
-            fontWeight: '700',
-            fontSize: '0.95rem',
-            cursor: 'pointer',
-            boxShadow: isDarkMode 
-              ? '0 4px 20px rgba(56, 189, 248, 0.35)' 
-              : '0 4px 15px rgba(0,0,0,0.15)',
-            transition: 'all 0.2s ease-in-out'
-          }}
-        >
-          Istraži lokacije ↓
-        </button>
-
-        <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-          <div>
-            <div style={{ fontSize: '1.3rem', fontWeight: '800', color: '#fef08a', lineHeight: 1 }}>8+</div>
-            <div style={{ fontSize: '0.8rem', color: '#f1f5f9' }}>Lokacija</div>
-          </div>
-          <div style={{ width: '1px', height: '24px', backgroundColor: 'rgba(255,255,255,0.3)' }} />
-          <div>
-            <div style={{ fontSize: '1.3rem', fontWeight: '800', color: '#fef08a', lineHeight: 1 }}>Bogata</div>
-            <div style={{ fontSize: '0.8rem', color: '#f1f5f9' }}>Historija</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div style={{
-      flex: '0 0 auto',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 2
-    }}>
       <div style={{
-        padding: '6px',
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        backdropFilter: 'blur(8px)',
-        borderRadius: '20px',
-        border: '1px solid rgba(255, 255, 255, 0.4)',
-        boxShadow: '0 12px 30px rgba(0,0,0,0.15)'
+        background: isDarkMode 
+          ? 'linear-gradient(180deg, #132e38 0%, #0f172a 100%)' 
+          : 'linear-gradient(180deg, #6c9eb5 0%, #5b8fa7 65%, transparent 100%)',
+        width: '100vw',
+        position: 'relative',
+        left: '50%',
+        right: '50%',
+        marginLeft: '-50vw',
+        marginRight: '-50vw',
+        marginTop: '-2.5rem',
+        padding: '4rem 2rem 4rem 2rem',
+        borderRadius: '0 0 28px 28px',
+        marginBottom: '2.5rem'
       }}>
-        <img 
-          src="/hero-bg.jpg" 
-          alt="Visoko Piramida Ilustracija" 
-          style={{
-            height: '240px',
-            width: 'auto',
-            borderRadius: '14px',
-            display: 'block',
-            objectFit: 'cover'
-          }}
-        />
+        <header style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '13rem',
+          maxWidth: '1000px',
+          margin: '0 auto',
+          color: '#ffffff',
+          position: 'relative',
+          flexWrap: 'wrap'
+        }}>
+          <div style={{ flex: '1 1 420px', maxWidth: '520px', textAlign: 'left', zIndex: 2 }}>
+            <h1 style={{ 
+              fontSize: '2.8rem', 
+              fontWeight: '800', 
+              marginBottom: '0.75rem', 
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              color: '#ffffff',
+              textShadow: '0 2px 10px rgba(0,0,0,0.15)'
+            }}>
+              Istražite <span style={{ color: '#fef08a' }}>Visoko</span>
+            </h1>
+
+            <p style={{ 
+              fontSize: '1.1rem', 
+              lineHeight: 1.6,
+              color: '#f8fafc',
+              marginBottom: '1.75rem',
+              textShadow: '0 1px 4px rgba(0,0,0,0.15)'
+            }}>
+              Otkrijte kulturna, historijska i prirodna bogatstva grada Visoko, od tajanstvenih piramida do kraljevske historije.
+            </p>
+
+            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <button 
+                onClick={() => {
+                  const el = document.getElementById('locations');
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+                style={{
+                  backgroundColor: isDarkMode ? '#72cffa' : '#ffffff', 
+                  color: '#0f172a',
+                  border: isDarkMode ? '1px solid #7dd3fc' : 'none',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '12px',
+                  fontWeight: '700',
+                  fontSize: '0.95rem',
+                  cursor: 'pointer',
+                  boxShadow: isDarkMode 
+                    ? '0 4px 20px rgba(56, 189, 248, 0.35)' 
+                    : '0 4px 15px rgba(0,0,0,0.15)',
+                  transition: 'all 0.2s ease-in-out'
+                }}
+              >
+                Istraži lokacije ↓
+              </button>
+
+              <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+                <div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: '800', color: '#fef08a', lineHeight: 1 }}>8+</div>
+                  <div style={{ fontSize: '0.8rem', color: '#f1f5f9' }}>Lokacija</div>
+                </div>
+                <div style={{ width: '1px', height: '24px', backgroundColor: 'rgba(255,255,255,0.3)' }} />
+                <div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: '800', color: '#fef08a', lineHeight: 1 }}>Bogata</div>
+                  <div style={{ fontSize: '0.8rem', color: '#f1f5f9' }}>Historija</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{
+            flex: '0 0 auto',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 2
+          }}>
+            <div style={{
+              padding: '6px',
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(8px)',
+              borderRadius: '20px',
+              border: '1px solid rgba(255, 255, 255, 0.4)',
+              boxShadow: '0 12px 30px rgba(0,0,0,0.15)'
+            }}>
+              <img 
+                src="/hero-bg.jpg" 
+                alt="Visoko Piramida Ilustracija" 
+                style={{
+                  height: '240px',
+                  width: 'auto',
+                  borderRadius: '14px',
+                  display: 'block',
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
+          </div>
+        </header>
       </div>
-    </div>
-  </header>
-</div>
 
       <section style={{
         maxWidth: '1000px',
@@ -207,7 +207,7 @@ export const HomePage = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-           O gradu Visoko  
+          O gradu Visoko  
         </h2>
 
         <p style={{ fontSize: '1.05rem', color: isDarkMode ? '#cbd5e1' : '#334155', marginBottom: '1rem' }}>
@@ -220,17 +220,21 @@ export const HomePage = () => {
 
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <span style={{ backgroundColor: isDarkMode ? '#0f172a' : '#f1f5f9', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#f8fafc' : '#0f172a', padding: '0.4rem 0.9rem', borderRadius: '20px', fontSize: '0.875rem', fontWeight: '600' }}> Srednjovjekovna prijestolnica 👑</span>
-          <span style={{ backgroundColor: isDarkMode ? '#0f172a' : '#f1f5f9', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#f8fafc' : '#0f172a', padding: '0.4rem 0.9rem', borderRadius: '20px', fontSize: '0.875rem', fontWeight: '600' }}>  Bosanske piramide 📐</span>
+          <span style={{ backgroundColor: isDarkMode ? '#0f172a' : '#f1f5f9', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#f8fafc' : '#0f172a', padding: '0.4rem 0.9rem', borderRadius: '20px', fontSize: '0.875rem', fontWeight: '600' }}> Bosanske piramide 📐</span>
           <span style={{ backgroundColor: isDarkMode ? '#0f172a' : '#f1f5f9', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#f8fafc' : '#0f172a', padding: '0.4rem 0.9rem', borderRadius: '20px', fontSize: '0.875rem', fontWeight: '600' }}> Netaknuta priroda 🌿</span>
           <span style={{ backgroundColor: isDarkMode ? '#0f172a' : '#f1f5f9', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#f8fafc' : '#0f172a', padding: '0.4rem 0.9rem', borderRadius: '20px', fontSize: '0.875rem', fontWeight: '600' }}> Tradicija kožarstva 👞</span>
         </div>
       </section>
 
-      <section id = "locations"style={{ maxWidth: '800px', margin: '0 auto 2.5rem auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto 3rem auto' }}>
+        <CityFacts />
+      </div>
+
+      <section id="locations" style={{ maxWidth: '800px', margin: '0 auto 2.5rem auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <input
             type="text"
-            placeholder="🔍 Pretraži lokacije po nazivu ili opisu..."
+            placeholder="Pretraži lokacije po nazivu ili opisu..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
