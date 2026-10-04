@@ -12,22 +12,22 @@ export const CityFacts = () => {
 
   const facts: FactItem[] = [
     {
-      image: 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?auto=format&fit=crop&w=600&q=80',
-      title: 'Stolno mjesto kraljeva (Mile)',
-      tag: 'Historija 👑',
-      desc: 'U Milima pored Visokog krunisan je prvi bosanski kralj Tvrtko I Kotromanić 1377. godine, a tu se nalazila i grobnica kralja Stjepana II Kotromanića.'
+      image: 'https://express.ba/wp-content/uploads/2025/08/Elvira-koncert-Visoko1.jpg',
+      title: 'Visočko ljeto',
+      tag: 'Kultura & Zabava 🎭',
+      desc: 'Centralna godišnja kulturno-sportska i privredna manifestacija koja se održava tokom jula i augusta. Grad tada dodatno oživi uz bogat muzički program, "Dane trgovine", koncerte na otvorenom, izložbe i sportske turnire.'
     },
     {
-      image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80',
+      image: 'https://visoko.ba/wp-content/uploads/2025/07/vasar.jpg',
+      title: 'Tradicionalni Visočki Vašar ("Vašer")',
+      tag: 'Trgovina & Tradicija 🛍️',
+      desc: 'Višedecenijska trgovačka manifestacija ("Dani trgovine") koja se održava krajem jula i početkom augusta u sklopu Visočkog ljeta. Glavne gradske ulice pretvaraju se u ogromnu tržnicu na otvorenom, privlačeći desetinama hiljada posjetilaca iz cijele regije.'
+    },
+    {
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzp1cJTOGOa-rPpbzLDI4jQtaXlOaxZEyKMqLT_m1RYlmv4_H3KjeCYSHA&s=10',
       title: 'Povelja Kulina bana',
       tag: 'Baština 📜',
       desc: 'Rodno mjesto bosanske državnosti. Povelja Kulina bana napisana je 1189. godine na području današnjeg Visokog (lokalitet Biskupatije/Moštra).'
-    },
-    {
-      image: 'https://i0.wp.com/lll.ba/wp-content/uploads/2023/06/Suho-meso-Bosnia-Herzegovina-lll.ba-%40mezzeplattershop-1.jpg?resize=1024%2C1024&ssl=1',
-      title: 'Zaštićeno suho meso',
-      tag: 'Gastronomija 🥩',
-      desc: 'Visočko suho meso posjeduje zvaničnu geografsku zaštitu porijekla. Tradicija sušenja na bukovom dimu u pušnicama prenosi se generacijama.'
     },
     {
       image: 'https://cdn.pixabay.com/photo/2021/03/08/12/06/oxford-shoes-6078951_1280.jpg',
@@ -42,10 +42,10 @@ export const CityFacts = () => {
       desc: 'Jedno od najvećih neolitskih naselja Butmirske kulture u jugoistočnoj Evropi (oko 5200–4500. p.n.e.). Predstavlja jedno od najranijih protourbanih naselja na Balkanu.'
     },
     {
-      image: 'https://etto.ba/uploads/covers/240501040.webp?v=1714561481',
-      title: 'Šerefudinova Bijela džamija',
-      tag: 'Arhitektura 🕌',
-      desc: 'Remek-djelo moderne arhitekture arhitekte Zlatka Ugljena. Godine 1983. dobila je prestižnu međunarodnu Aga Khan nagradu za arhitekturu.'
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxVc6Z_wJGXRrHrh6JVzNrMQ00yoZke4F0Tcc3Fszb3xzxO105a9_wddiO&s=10',
+      title: 'Festival kulture Kulin Ban',
+      tag: 'Manifestacija & Tradicija 🏰',
+      desc: 'Kulturna i historijska manifestacija koja se svake godine održava u Visokom krajem augusta u čast Povelje Kulina bana (1189.). Oživljava srednjovjekovnu Bosnu kroz filmove, koncerte izložbe i radionice.'
     },
     {
       image: 'https://upload.wikimedia.org/wikipedia/commons/f/f0/Matrak%C3%A7%C4%B1_Nasuh_-_%C4%B0stanbul.jpg?utm_source=bs.wikipedia.org&utm_campaign=index&utm_content=original',

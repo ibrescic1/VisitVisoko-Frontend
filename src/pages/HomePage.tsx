@@ -145,7 +145,7 @@ export const HomePage = () => {
 
               <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontSize: '1.3rem', fontWeight: '800', color: '#fef08a', lineHeight: 1 }}>8+</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: '800', color: '#fef08a', lineHeight: 1 }}>14+</div>
                   <div style={{ fontSize: '0.8rem', color: '#f1f5f9' }}>Lokacija</div>
                 </div>
                 <div style={{ width: '1px', height: '24px', backgroundColor: 'rgba(255,255,255,0.3)' }} />
