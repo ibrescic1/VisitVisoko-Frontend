@@ -414,18 +414,52 @@ export const LocationDetailsPage = () => {
                 : '0 4px 6px -1px rgba(0,0,0,0.05)',
             }}
           >
-            <h2
-              style={{
-                fontSize: '1.5rem',
-                fontWeight: '700',
-                marginBottom: '1.5rem',
-                color: isDarkMode ? '#f8fafc' : '#0f172a',
-              }}
-            >
-              Recenzije i mišljenja posjetitelja
-            </h2>
+            <div style={{
+              marginTop: '2rem',
+              padding: '1.5rem',
+              backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+              borderRadius: '12px',
+              border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+              boxShadow: isDarkMode ? '0 4px 12px rgba(0,0,0,0.2)' : '0 4px 6px -1px rgba(0,0,0,0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1.5rem',
+              flexWrap: 'wrap'
+            }}>
+              <div style={{
+                backgroundColor: '#ffffff',
+                padding: '8px',
+                borderRadius: '10px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=${encodeURIComponent(window.location.href)}`}
+                  alt={`QR kod za ${locationTitle}`}
+                  style={{ width: '130px', height: '130px', display: 'block' }}
+                />
+              </div>
 
-            <ReviewForm locationId={location.id} />
+              <div style={{ flex: '1 1 250px' }}>
+                <h3 style={{
+                  fontSize: '1.15rem',
+                  fontWeight: '700',
+                  margin: '0 0 0.4rem 0',
+                  color: isDarkMode ? '#f8fafc' : '#0f172a'
+                }}>
+                  Otvori ili podijeli putem QR koda
+                </h3>
+                <p style={{
+                  fontSize: '0.9rem',
+                  color: isDarkMode ? '#cbd5e1' : '#64748b',
+                  lineHeight: '1.5',
+                  margin: 0
+                }}>
+                  Skenirajte ovaj kod kamerom pametnog telefona da biste odmah otvorili ovu lokaciju na mobilnom uređaju ili je podijelili sa prijateljima i turistima.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

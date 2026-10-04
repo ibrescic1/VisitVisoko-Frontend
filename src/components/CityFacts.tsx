@@ -25,7 +25,7 @@ export const CityFacts = () => {
     },
     {
       image: 'https://i0.wp.com/lll.ba/wp-content/uploads/2023/06/Suho-meso-Bosnia-Herzegovina-lll.ba-%40mezzeplattershop-1.jpg?resize=1024%2C1024&ssl=1',
-      title: 'Zaštićeno Suho Meso',
+      title: 'Zaštićeno suho meso',
       tag: 'Gastronomija 🥩',
       desc: 'Visočko suho meso posjeduje zvaničnu geografsku zaštitu porijekla. Tradicija sušenja na bukovom dimu u pušnicama prenosi se generacijama.'
     },
@@ -42,8 +42,8 @@ export const CityFacts = () => {
       desc: 'Jedno od najvećih neolitskih naselja Butmirske kulture u jugoistočnoj Evropi (oko 5200–4500. p.n.e.). Predstavlja jedno od najranijih protourbanih naselja na Balkanu.'
     },
     {
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5i7H724zQN9iUPIWVtkXkb9Xg1wt8mMTysWMMdGggQ4v-GezTGGgQhACH&s=10',
-      title: 'Šerefudinova Bijela Džamija',
+      image: 'https://etto.ba/uploads/covers/240501040.webp?v=1714561481',
+      title: 'Šerefudinova Bijela džamija',
       tag: 'Arhitektura 🕌',
       desc: 'Remek-djelo moderne arhitekture arhitekte Zlatka Ugljena. Godine 1983. dobila je prestižnu međunarodnu Aga Khan nagradu za arhitekturu.'
     },
