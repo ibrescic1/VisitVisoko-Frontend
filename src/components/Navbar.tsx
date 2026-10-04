@@ -107,7 +107,7 @@ export const Navbar = () => {
                   transition: 'all 0.2s ease'
                 }}
               >
-                 Admin Panel
+                ⚙️ Admin Panel
               </Link>
             )}
 

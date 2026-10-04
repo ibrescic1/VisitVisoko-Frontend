@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import { getLocationById } from '../services/locationService';
 import type { LocationDto } from '../types/location';
 import { useTheme } from '../context/ThemeContext';
-import { ReviewForm } from '../components/ReviewForm';
 
 const checkIsAdmin = (): boolean => {
   const token = localStorage.getItem('token');
@@ -156,6 +155,7 @@ export const LocationDetailsPage = () => {
 
   const latitude = location.latitude || 43.9878;
   const longitude = location.longitude || 18.1783;
+  
 
   return (
     <div
