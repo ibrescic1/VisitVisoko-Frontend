@@ -9,6 +9,10 @@ interface CategoryDto {
   name: string;
 }
 
+const RAW_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:5086';
+const BASE_URL = RAW_URL.replace(/\/api\/?$/, '').replace(/\/$/, '');
+const API_URL = `${BASE_URL}/api`;
+
 const getImageUrl = (url?: string) => {
   if (!url || url === 'string' || url.trim() === '') {
     return 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=600&q=80';
@@ -28,7 +32,7 @@ const getImageUrl = (url?: string) => {
     cleanUrl = `/${cleanUrl}`;
   }
 
-  return `http://localhost:5086${cleanUrl}`;
+  return `${BASE_URL}${cleanUrl}`;
 };
 
 export const AdminPage = () => {
@@ -50,7 +54,7 @@ export const AdminPage = () => {
     getLocations().then(setLocations).catch(console.error);
 
     try {
-      const res = await fetch('http://localhost:5086/api/categories');
+      const res = await fetch(`${API_URL}/categories`);
       if (res.ok) {
         const data = await res.json();
         setCategories(data);
@@ -105,8 +109,8 @@ export const AdminPage = () => {
     };
 
     const url = editingId
-      ? `http://localhost:5086/api/locations/${editingId}`
-      : 'http://localhost:5086/api/locations';
+      ? `${API_URL}/locations/${editingId}`
+      : `${API_URL}/locations`;
 
     const method = editingId ? 'PUT' : 'POST';
 
@@ -138,7 +142,7 @@ export const AdminPage = () => {
     const token = localStorage.getItem('token');
 
     try {
-      const res = await fetch(`http://localhost:5086/api/locations/${id}`, {
+      const res = await fetch(`${API_URL}/locations/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
